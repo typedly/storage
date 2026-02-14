@@ -55,13 +55,21 @@ import {
 
 ### `StorageShape`
 
-- [StorageShape](https://github.com/typedly/storage/blob/main/src/lib/interface/storage-shape.interface.ts),
+```typescript
+import { StorageShape } from '@typedly/storage';
+```
+
+ [StorageShape](https://github.com/typedly/storage/blob/main/src/lib/interface/storage-shape.interface.ts)
 
 ## Types
 
 ### `StorageMethodName`
 
-- [StorageMethodName](https://github.com/typedly/storage/blob/main/src/lib/type/storage-method.name.type.ts),
+```typescript
+import { StorageMethodName } from '@typedly/storage';
+```
+
+- [StorageMethodName](https://github.com/typedly/storage/blob/main/src/lib/type/storage-method.name.type.ts)
 
 ## Contributing
 
