@@ -1,0 +1,1 @@
+export type { StorageShape } from './storage-shape.interface';

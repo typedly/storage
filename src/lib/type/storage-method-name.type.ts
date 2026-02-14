@@ -1,0 +1,16 @@
+export type StorageMethodName =
+  | 'add'
+  | 'delete'
+  | 'save' 
+  | 'load' 
+  | 'set' 
+  | 'update' 
+  | 'put' 
+  | 'clear'
+  | 'entries'
+  | 'forEach'
+  | 'get'
+  | 'has'
+  | 'keys'
+  | 'values'
+;
