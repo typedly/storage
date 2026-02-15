@@ -17,6 +17,11 @@ export class MemoryStorage<O extends Record<string, any>>
     return this.#map.size;
   }
 
+  
+  /**
+   * @description Clears the map.
+   * @returns {this} 
+   */
   clear(): this {
     this.#map.clear();
     this.value = {} as O;
