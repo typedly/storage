@@ -1,7 +1,7 @@
 // ---- Simple in-memory implementation (R=false) ----
 
 import { StorageListener, StorageMethodName } from "../type";
-import { StorageShape } from "./storage-shape.interface";
+import { StorageShape } from "./storage.shape";
 
 
 export class MemoryStorage<O extends Record<string, any>>

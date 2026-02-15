@@ -3,7 +3,7 @@ import { AsyncReturn, DataShape } from '@typedly/data';
 // Type.
 import { StorageListener, StorageMethodName } from '../type';
 /**
- * @description Defines the shape of a storage object, with replaceable data shape and async return types.
+ * @description The shape of a storage object with optional async return types.
  * @export
  * @interface StorageShape
  * @template {boolean} [R=false] The async return type flag, where `true` means all methods return Promises and `false` means they return values directly.
