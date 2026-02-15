@@ -18,9 +18,12 @@ export interface StorageShape<
   K extends keyof O = keyof O,
   V = O[K], // Value type for the key K
 > extends DataShape<O, R> {
-
+  /**
+   * @description The number of key-value pairs in the storage.
+   * @readonly
+   * @type {number}
+   */
   get size(): number;
-
   
   /**
    * @description Adds the value of `V` under the `key` of `K`.
@@ -38,14 +41,14 @@ export interface StorageShape<
   delete(key: K): AsyncReturn<R, boolean>;
 
   /**
-   * @description
+   * @description Retrieves all key-value pairs in the storage.
    * @returns {AsyncReturn<R, [K, V][]>} 
    */
   entries(): AsyncReturn<R, [K, V][]>;
 
   /**
-   * @description
-   * @param {(value: V, key: K) => void} callback 
+   * @description Executes a provided function once for each key-value pair in the storage.
+   * @param {(value: V, key: K) => void} callback The function to execute for each element.
    * @returns {AsyncReturn<R, this>} 
    */
   forEach(callback: (value: V, key: K) => void): AsyncReturn<R, this>;
