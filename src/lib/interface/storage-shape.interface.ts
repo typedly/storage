@@ -1,22 +1,23 @@
 // @typedly.
 import { AsyncReturn, DataShape } from '@typedly/data';
 // Type.
-import { StorageMethodName } from '../type';
+import { StorageListener, StorageMethodName } from '../type';
 /**
  * @description Defines the shape of a storage object, with replaceable data shape and async return types.
  * @export
  * @interface StorageShape
  * @template {boolean} [R=false] The async return type flag, where `true` means all methods return Promises and `false` means they return values directly.
- * @template [O=object] The shape of the storage object.
+ * @template [O=Record<string, any>] The shape of the storage object.
  * @template {keyof O} [K=keyof O] The keys of the storage object.
  * @template [V=O[K]] The values of the storage object.
  * @extends {DataShape<O, R>}
  */
 export interface StorageShape<
   R extends boolean = false,
-  O = object,
+  O = Record<string, any>,
   K extends keyof O = keyof O,
-  V = O[K], // Value type for the key K
+  V = O[K],
+  P extends {key: K, value?: V} = {key: K, value?: V}
 > extends DataShape<O, R> {
   /**
    * @description The number of key-value pairs in the storage.
@@ -76,6 +77,14 @@ export interface StorageShape<
   /**
    * @description Removes a listener for the specified storage method.
    * @param {StorageMethodName} method The storage method for which to remove the listener.
+   * @param {StorageListener<K, V, P>} listener The listener function to be removed.
+   * @returns {AsyncReturn<R, this>} 
+   */
+  off?(method: StorageMethodName, listener: StorageListener<K, V, P>): AsyncReturn<R, this>;
+
+  /**
+   * @description Removes all listeners for the specified storage method.
+   * @param {StorageMethodName} method The storage method for which to remove the listeners.
    * @returns {AsyncReturn<R, this>} 
    */
   off?(method: StorageMethodName): AsyncReturn<R, this>;
@@ -83,10 +92,10 @@ export interface StorageShape<
   /**
    * @description Adds a listener for the specified storage method.
    * @param {StorageMethodName} method The storage method for which to add the listener.
-   * @param {(key: K, value?: V) => void} listener The listener function to be called when the storage method is invoked.
+   * @param {StorageListener<K, V, P>} listener The listener function to be called when the storage method is invoked.
    * @returns {AsyncReturn<R, this>} 
    */
-  on?(method: StorageMethodName, listener: (key: K, value?: V) => void): AsyncReturn<R, this>;
+  on?(method: StorageMethodName, listener: StorageListener<K, V, P>): AsyncReturn<R, this>;
 
   /**
    * @description Saves the current state of the storage under the data.
