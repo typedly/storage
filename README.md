@@ -14,7 +14,7 @@
 [![GitHub issues][typedly-badge-issues]][typedly-issues]
 [![GitHub license][typedly-badge-license]][typedly-license]
 
-**Version:** v1.0.1
+**Version:** v2.0.0
 
 A **TypeScript** type definitions package for customizable **storage**.
 
@@ -23,8 +23,10 @@ A **TypeScript** type definitions package for customizable **storage**.
 - [Installation](#installation)
 - [Api](#api)
   - [Interfaces](#interfaces)
+    - [`StorageAdapter`](#storageadapter)
     - [`StorageShape`](#storageshape)
   - [Types](#types)
+    - [`StorageListener`](#storagelistener)
     - [`StorageMethodName`](#storagemethodname)
 - [Contributing](#contributing)
 - [Support](#support)
@@ -45,31 +47,57 @@ npm install @typedly/storage --save-peer
 ```typescript
 import {
   // Interface.
+  StorageAdapter,
   StorageShape,
   // Type.
+  StorageListener,
   StorageMethodName,
 } from '@typedly/storage';
 ```
 
 ## Interfaces
 
+### `StorageAdapter`
+
+The storage adapter shape.
+
+```typescript
+import { StorageAdapter } from '@typedly/storage';
+```
+
+[Source](https://github.com/typedly/storage/blob/main/src/lib/interface/storage.adapter.ts)
+
 ### `StorageShape`
+
+The shape of a storage object with optional async return types.
 
 ```typescript
 import { StorageShape } from '@typedly/storage';
 ```
 
- [StorageShape](https://github.com/typedly/storage/blob/main/src/lib/interface/storage-shape.interface.ts)
+[Source](https://github.com/typedly/storage/blob/main/src/lib/interface/storage.shape.ts)
 
 ## Types
 
+### `StorageListener`
+
+The type definition for storage listener function.
+
+```typescript
+import { StorageListener } from '@typedly/storage';
+```
+
+[Source](https://github.com/typedly/storage/blob/main/src/lib/type/storage-listener.type.ts)
+
 ### `StorageMethodName`
+
+The method names of the storage that can be listened to.
 
 ```typescript
 import { StorageMethodName } from '@typedly/storage';
 ```
 
-- [StorageMethodName](https://github.com/typedly/storage/blob/main/src/lib/type/storage-method.name.type.ts)
+[Source](https://github.com/typedly/storage/blob/main/src/lib/type/storage-method-name.type.ts)
 
 ## Contributing
 

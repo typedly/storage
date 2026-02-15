@@ -1,1 +1,2 @@
-export type { StorageShape } from './storage-shape.interface';
+export type { StorageAdapter } from './storage.adapter'
+export type { StorageShape } from './storage.shape';

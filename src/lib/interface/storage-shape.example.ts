@@ -1,9 +1,8 @@
 // ---- Simple in-memory implementation (R=false) ----
 
-import { StorageMethodName } from "../type";
-import { StorageShape } from "./storage-shape.interface";
+import { StorageListener, StorageMethodName } from "../type";
+import { StorageShape } from "./storage.shape";
 
-type Listener<K, V> = (key: K, value?: V) => void;
 
 export class MemoryStorage<O extends Record<string, any>>
   implements StorageShape<false, O, keyof O, O[keyof O]>
@@ -11,7 +10,7 @@ export class MemoryStorage<O extends Record<string, any>>
   value = {} as O;
 
   #map = new Map<keyof O, O[keyof O]>();
-  #listeners = new Map<string, Set<Listener<keyof O, O[keyof O]>>>();
+  #listeners = new Map<string, Set<StorageListener<keyof O, O[keyof O]>>>();
 
   get size(): number {
     return this.#map.size;
@@ -51,7 +50,7 @@ export class MemoryStorage<O extends Record<string, any>>
     if (this.#map.has(key)) return false;
     this.#map.set(key, value);
     (this.value as any)[key] = value;
-    this.#emit('add', key, value);
+    this.#emit('add', {key, value});
     return true;
   }
 
@@ -59,7 +58,7 @@ export class MemoryStorage<O extends Record<string, any>>
     const existed = this.#map.has(key);
     this.#map.set(key, value);
     (this.value as any)[key] = value;
-    this.#emit(existed ? 'put' : 'add', key, value);
+    this.#emit(existed ? 'put' : 'add', {key, value});
     return true;
   }
 
@@ -67,7 +66,7 @@ export class MemoryStorage<O extends Record<string, any>>
     if (!this.#map.has(key)) return false;
     this.#map.set(key, value);
     (this.value as any)[key] = value;
-    this.#emit('update', key, value);
+    this.#emit('update', {key, value});
     return true;
   }
 
@@ -75,7 +74,7 @@ export class MemoryStorage<O extends Record<string, any>>
     const ok = this.#map.delete(key);
     if (ok) {
       delete (this.value as any)[key];
-      this.#emit('delete', key, undefined);
+      this.#emit('delete', {key, value: undefined});
     }
     return ok;
   }
@@ -106,7 +105,7 @@ export class MemoryStorage<O extends Record<string, any>>
   }
 
   // For simplicity, we key listeners by event.type (string)
-  on(event: StorageMethodName, listener: (key: keyof O, value?: O[keyof O]) => void): this {
+  on(event: StorageMethodName, listener: (payload: {key: keyof O, value?: O[keyof O]}) => void): this {
     if (!this.#listeners.has(event)) this.#listeners.set(event, new Set());
     this.#listeners.get(event)!.add(listener);
     return this;
@@ -127,10 +126,10 @@ export class MemoryStorage<O extends Record<string, any>>
     return this;
   }
 
-  #emit(type: string, key?: keyof O, value?: O[keyof O]) {
+  #emit(type: string, payload: {key: keyof O, value?: O[keyof O]}) {
     const listeners = this.#listeners.get(type);
     if (!listeners) return;
-    listeners.forEach(fn => fn(key as any, value));
+    listeners.forEach(fn => fn(payload));
   }
 }
 
@@ -144,8 +143,8 @@ type LayoutState = {
 const store = new MemoryStorage<LayoutState>();
 
 // Subscribe (simple: event.type decides which listeners fire)
-store.on('put', (key, value) => {
-  console.log('[put]', key, value);
+store.on('put', (payload) => {
+  console.log('[put]', payload.key, payload.value);
 });
 
 store.add('pinned.left', false);          // true

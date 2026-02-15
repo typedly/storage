@@ -1,3 +1,7 @@
+/**
+ * @description The method names of the storage that can be listened to.
+ * @export
+ */
 export type StorageMethodName =
   | 'add'
   | 'delete'
