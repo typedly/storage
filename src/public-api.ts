@@ -2,4 +2,4 @@
  * Public API Surface of storage
  */
 
-export * from './lib/interface';
+export * from './lib';
