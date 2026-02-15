@@ -1,6 +1,7 @@
-import { StorageShape } from "./storage-shape.interface";
+// Interface.
+import { StorageShape } from "./storage.shape";
 /**
- * @description
+ * @description The storage adapter shape.
  * @export
  * @interface StorageAdapter
  * @template [O=Record<string, any>] 
