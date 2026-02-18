@@ -10,6 +10,7 @@ import { StorageListener, StorageMethodName } from '../type';
  * @template [O=Record<string, any>] The shape of the storage object.
  * @template {keyof O} [K=keyof O] The keys of the storage object.
  * @template [V=O[K]] The values of the storage object.
+ * @template {{key: K, value?: V}} [P={key: K, value?: V}] Payload for storage listener.
  * @extends {DataShape<O, R>}
  */
 export interface StorageShape<
@@ -113,9 +114,9 @@ export interface StorageShape<
    * @description Sets the value of `V` under the `key` of `K`, replacing any existing value.
    * @param {K} key The key under which the value is set.
    * @param {V} value The value to be set.
-   * @returns {AsyncReturn<R, boolean>} 
+   * @returns {AsyncReturn<R, this>} 
    */
-  put(key: K, value: V): AsyncReturn<R, boolean>;
+  set(key: K, value: V): AsyncReturn<R, this>;
 
   /**
    * @description Updates the value of `V` under the `key` of `K`, only if it already exists.

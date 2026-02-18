@@ -38,12 +38,20 @@ export class MemoryStorage<O extends Record<string, any>>
     return this;
   }
 
-  set(value: O): this {
+  set(key: keyof O, value: O[keyof O]): this {
     // DataShape.set(value): replace full dataset
     this.value = value;
     this.#map = new Map(Object.entries(value) as any);
     this.#emit('set', undefined as any);
     return this;
+  }
+
+  setValue(value: O): this {
+    return this;
+  }
+
+  getValue(): O {
+    return this.value;
   }
 
   add(key: keyof O, value: O[keyof O]): boolean {
