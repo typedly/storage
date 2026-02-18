@@ -14,7 +14,7 @@
     "clean": "./node_modules/rimraf/dist/esm/bin.mjs ./fesm2022 ./node_modules && npm pkg delete scripts"
   },
   "peerDependencies": {
-    "@typedly/data": "^3.0.0"
+    "@typedly/data": "^4.0.0"
   },
   "repository": {
     "type": "git",
